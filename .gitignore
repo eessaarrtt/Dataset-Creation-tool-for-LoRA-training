@@ -37,7 +37,6 @@ ENV/
 # Project specific
 config.json
 profiles/
-output/
 *.log
 prompt_generation_log_*.txt
 test_prompt_output_*.txt
@@ -51,7 +50,3 @@ secrets/
 *.tmp
 *.temp
 .cache/
-
-# Sample data (users should add their own)
-Sample Dataset/
-Influencer Reference Images/
