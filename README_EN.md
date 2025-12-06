@@ -269,6 +269,95 @@ On first run, an **interactive menu** will appear for selecting all settings!
 
 ---
 
+## 💻 How to Run the Script
+
+### Method 1: Terminal / Command Line (Recommended)
+
+**Windows:**
+1. Open **Command Prompt** (cmd) or **PowerShell**
+   - Press `Win + R`, type `cmd` or `powershell`, press Enter
+2. Navigate to project folder:
+   ```bash
+   cd C:\path\to\makenanalog
+   ```
+3. Run the script:
+   ```bash
+   python dataset_creation.py
+   ```
+
+**macOS / Linux:**
+1. Open **Terminal**
+   - macOS: Press `Cmd + Space`, type "Terminal", press Enter
+   - Linux: Press `Ctrl + Alt + T` or find Terminal in applications
+2. Navigate to project folder:
+   ```bash
+   cd /path/to/makenanalog
+   ```
+3. Run the script:
+   ```bash
+   python dataset_creation.py
+   # or
+   python3 dataset_creation.py
+   ```
+
+### Method 2: IDE (Integrated Development Environment)
+
+You can run the script from popular code editors:
+
+**Visual Studio Code:**
+1. Open VS Code
+2. File → Open Folder → Select project folder
+3. Open `dataset_creation.py`
+4. Right-click → "Run Python File in Terminal"
+   - Or press `F5` and select "Python File"
+
+**PyCharm:**
+1. Open PyCharm
+2. File → Open → Select project folder
+3. Right-click `dataset_creation.py` → "Run 'dataset_creation'"
+   - Or press `Shift + F10`
+
+**IDLE (Python's built-in IDE):**
+1. Open IDLE
+2. File → Open → Select `dataset_creation.py`
+3. Run → Run Module (or press `F5`)
+
+### Method 3: Create a Shortcut File
+
+**Windows - Create `run.bat`:**
+1. Create a new text file named `run.bat` in project folder
+2. Add this content:
+   ```batch
+   @echo off
+   cd /d "%~dp0"
+   python dataset_creation.py
+   pause
+   ```
+3. Save and double-click to run
+
+**macOS / Linux - Create `run.sh`:**
+1. Create a new file named `run.sh` in project folder
+2. Add this content:
+   ```bash
+   #!/bin/bash
+   cd "$(dirname "$0")"
+   python3 dataset_creation.py
+   ```
+3. Make it executable:
+   ```bash
+   chmod +x run.sh
+   ```
+4. Double-click or run: `./run.sh`
+
+### Method 4: Jupyter Notebook (Advanced)
+
+If you want to run parts of the script interactively:
+1. Install Jupyter: `pip install jupyter`
+2. Create a notebook: `jupyter notebook`
+3. Import and use functions from `dataset_creation.py`
+
+---
+
 ## 💻 Usage
 
 ### Interactive Mode (Recommended)

@@ -86,6 +86,53 @@ This project is licensed under **MIT License with Commercial Use Restrictions**.
 
 ---
 
+## 💻 How to Run / Как запустить
+
+### Terminal / Command Line / Терминал
+
+**Windows:**
+- Open **Command Prompt** (cmd) or **PowerShell**
+- Navigate to project folder: `cd path\to\makenanalog`
+- Run: `python dataset_creation.py`
+
+**macOS / Linux:**
+- Open **Terminal**
+- Navigate to project folder: `cd /path/to/makenanalog`
+- Run: `python dataset_creation.py` or `python3 dataset_creation.py`
+
+### IDE (Integrated Development Environment)
+
+You can also run the script from popular IDEs:
+
+- **VS Code**: Open project folder → Right-click `dataset_creation.py` → "Run Python File in Terminal"
+- **PyCharm**: Open project → Right-click `dataset_creation.py` → "Run 'dataset_creation'"
+- **IDLE** (Python's built-in IDE): File → Open → Select `dataset_creation.py` → Run → Run Module (F5)
+
+### Creating a Shortcut / Создание ярлыка
+
+**Windows** - Create `run.bat`:
+```batch
+@echo off
+cd /d "%~dp0"
+python dataset_creation.py
+pause
+```
+
+**macOS / Linux** - Create `run.sh`:
+```bash
+#!/bin/bash
+cd "$(dirname "$0")"
+python3 dataset_creation.py
+```
+
+Then make it executable: `chmod +x run.sh`
+
+### Double-Click to Run / Запуск двойным кликом
+
+After creating the shortcut files above, you can double-click them to run the script.
+
+---
+
 ## ✨ Features
 
 - ✅ Local file storage
