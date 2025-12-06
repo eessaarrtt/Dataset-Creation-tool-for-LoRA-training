@@ -40,9 +40,10 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 - ✅ **Image generation** through **Wavespeed** API
 - ✅ **Automatic batch processing** of multiple images
 - ✅ **Caption generation** for LoRA training
-- ✅ **Interactive menu** for configuring all parameters
+- ✅ **Interactive menu** with arrow-key navigation and colored output
 - ✅ **Profile system** for saving different configurations
 - ✅ **Multilingual support** (Russian and English)
+- ✅ **Beautiful UI** with colored output and tables
 
 ### Supported Models
 
@@ -51,7 +52,9 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 - OpenAI GPT-5.1, GPT-4o (only models with vision support)
 
 **Image Generation (Wavespeed):**
-- Image-to-Image: `google/nano-banana-pro/edit`, `bytedance/seedream-v4.5`, `bytedance/seedream-v4`
+- Image-to-Image: `google/nano-banana-pro/edit`, `bytedance/seedream-v4.5/edit`, `bytedance/seedream-v4/edit`
+  - Seedream models use `size` parameter (e.g., "1024*1024", "2048*2048", "4096*4096")
+  - Nano Banana Pro uses `resolution` parameter (1k, 2k, 4k)
 - Image-to-Video: `alibaba/wan-2.5/image-to-video`, `kwaivgi/kling-v2.6-pro/image-to-video`, `kwaivgi/kling-v2.5-turbo-pro/image-to-video` ⚠️ **In Development** - modules are added but usage scenarios are not yet implemented. Will be available in future versions.
 
 **Caption Generation:**
@@ -79,6 +82,10 @@ urllib3>=2.0.0
 # AI providers (choose needed ones)
 google-generativeai>=0.3.0  # For Gemini
 openai>=1.0.0  # For OpenAI
+
+# Interactive menu
+rich>=13.0.0  # For beautiful colored output
+inquirer>=3.1.0  # For arrow-key navigation in menu
 ```
 
 ---
@@ -211,20 +218,24 @@ On first run, an **interactive menu** will appear for selecting all settings!
 python dataset_creation.py
 ```
 
-An interactive menu will appear:
+An interactive menu will appear with:
+- **Arrow-key navigation** (if `inquirer` is installed)
+- **Colored output** with tables and panels (if `rich` is installed)
+- **Fallback mode** with simple text input if libraries are not installed
 
+Example:
 ```
-============================================================
-  🎨 Dataset Creation - Interactive Setup
-============================================================
-
-Select settings (Enter to use values from config.json):
+╔════════════════════════════════════════════════════════╗
+║        🎨 Dataset Creation - Interactive Setup         ║
+╚════════════════════════════════════════════════════════╝
 
 1️⃣  AI provider for prompt generation:
    Current value: gemini
-   [1] Gemini (fast, free with limits)
-   [2] OpenAI (accurate, paid)
-   Your choice (1/2 or Enter to skip): 
+   
+   [1] Gemini
+   [2] OpenAI
+   
+   Your choice: [Use arrow keys to navigate]
 ```
 
 ### Non-Interactive Mode
@@ -487,8 +498,8 @@ pip install requests  # For HTTP requests
 
 **Model Prices:**
 - Nano Banana Pro Edit: $0.14 (1k/2k), $0.24 (4k)
-- Seedream v4.5: $0.04 per image
-- Seedream v4: $0.04 per image
+- Seedream v4.5: $0.04 per image (any resolution)
+- Seedream v4: $0.027 per image (any resolution)
 - Video models: depends on duration
 
 ### API Key Security
