@@ -39,6 +39,28 @@ This project is licensed under **MIT License with Commercial Use Restrictions**.
 
 ---
 
+## 📋 System Requirements / Системные требования
+
+### What You Need / Что нужно:
+
+- **Python 3.8+** (3.10+ recommended / рекомендуется 3.10+)
+- **pip** (Python package manager / менеджер пакетов Python)
+- **Internet connection** (for API requests / для API запросов)
+- **API keys** for selected providers (Gemini, OpenAI, Wavespeed)
+- **Terminal/Command Line** access (for running the script)
+
+**Операционные системы / Operating Systems:**
+- ✅ Windows 10/11
+- ✅ macOS 10.14+
+- ✅ Linux (Ubuntu, Debian, Fedora, etc.)
+
+**Не требуется / Not Required:**
+- ❌ GUI installation (script runs in terminal)
+- ❌ Special hardware (works on any computer with Python)
+- ❌ Cloud services (all files stored locally)
+
+---
+
 ## 🚀 Quick Start
 
 1. **Install dependencies:**

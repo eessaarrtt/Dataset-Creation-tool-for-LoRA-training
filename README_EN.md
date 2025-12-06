@@ -66,9 +66,31 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 
 ### System Requirements
 
+**Software:**
 - **Python 3.8+** (3.10+ recommended)
-- **Internet connection** for API requests
-- **API keys** for selected providers
+  - Download from [python.org](https://www.python.org/downloads/)
+  - Make sure to check "Add Python to PATH" during installation (Windows)
+- **pip** (usually comes with Python)
+  - Verify installation: `pip --version`
+- **Terminal/Command Line** access
+  - Windows: Command Prompt or PowerShell
+  - macOS/Linux: Terminal
+
+**Hardware:**
+- Any modern computer (no special requirements)
+- Internet connection for API requests
+- Enough disk space for images and output files
+
+**Accounts & Keys:**
+- **API keys** for selected providers:
+  - Gemini API key (free, from Google AI Studio)
+  - OpenAI API key (paid, from OpenAI Platform)
+  - Wavespeed API key (paid, from Wavespeed.ai)
+
+**Operating Systems:**
+- ✅ Windows 10/11
+- ✅ macOS 10.14+
+- ✅ Linux (Ubuntu, Debian, Fedora, etc.)
 
 ### Python Dependencies
 
@@ -102,19 +124,48 @@ cd makenanalog
 # Or simply download and extract the archive
 ```
 
-### Step 2: Install Dependencies
+### Step 2: Verify Python Installation
+
+First, make sure Python is installed correctly:
+
+```bash
+# Check Python version
+python --version
+# or
+python3 --version
+
+# Check pip installation
+pip --version
+# or
+pip3 --version
+```
+
+If Python is not installed:
+- **Windows/macOS**: Download from [python.org](https://www.python.org/downloads/)
+- **Linux**: Use package manager:
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install python3 python3-pip
+  
+  # Fedora
+  sudo dnf install python3 python3-pip
+  ```
+
+### Step 3: Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+# or
+pip3 install -r requirements.txt
 ```
 
-### Step 3: Create Configuration
+### Step 4: Create Configuration
 
 ```bash
 cp config.example.json config.json
 ```
 
-### Step 4: Configure config.json
+### Step 5: Configure config.json
 
 Open `config.json` and specify:
 
@@ -132,7 +183,7 @@ Open `config.json` and specify:
 }
 ```
 
-### Step 5: Prepare Folders
+### Step 6: Prepare Folders
 
 Create necessary folders (or they will be created automatically):
 
@@ -148,28 +199,36 @@ mkdir -p "output"
 
 ### Minimal Setup for First Run
 
-1. **Install dependencies:**
+1. **Check Python installation:**
+   ```bash
+   python --version  # Should be 3.8 or higher
+   pip --version     # Should show pip version
+   ```
+
+2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Create config.json:**
+3. **Create config.json:**
    ```bash
    cp config.example.json config.json
    ```
 
-3. **Add at least one API key** to `config.json`:
+4. **Add at least one API key** to `config.json`:
    - For Gemini: `gemini_api_key`
    - For OpenAI: `openai_api_key`
    - For Wavespeed: `wavespeed_api_key`
 
-4. **Prepare images:**
+5. **Prepare images:**
    - Place **at least 2 reference images** in `Influencer Reference Images/`
    - Place **sample images** in `Sample Dataset/`
 
-5. **Run the script:**
+6. **Run the script:**
    ```bash
    python dataset_creation.py
+   # or
+   python3 dataset_creation.py
    ```
 
 On first run, an **interactive menu** will appear for selecting all settings!

@@ -66,9 +66,31 @@
 
 ### Системные требования
 
+**Программное обеспечение:**
 - **Python 3.8+** (рекомендуется 3.10+)
-- **Интернет соединение** для API запросов
-- **API ключи** для выбранных провайдеров
+  - Скачать с [python.org](https://www.python.org/downloads/)
+  - При установке обязательно отметьте "Add Python to PATH" (Windows)
+- **pip** (обычно идет вместе с Python)
+  - Проверить установку: `pip --version`
+- **Терминал/Командная строка**
+  - Windows: Command Prompt или PowerShell
+  - macOS/Linux: Terminal
+
+**Аппаратное обеспечение:**
+- Любой современный компьютер (специальных требований нет)
+- Интернет соединение для API запросов
+- Достаточно места на диске для изображений и результатов
+
+**Аккаунты и ключи:**
+- **API ключи** для выбранных провайдеров:
+  - Ключ Gemini API (бесплатный, из Google AI Studio)
+  - Ключ OpenAI API (платный, из OpenAI Platform)
+  - Ключ Wavespeed API (платный, из Wavespeed.ai)
+
+**Операционные системы:**
+- ✅ Windows 10/11
+- ✅ macOS 10.14+
+- ✅ Linux (Ubuntu, Debian, Fedora и др.)
 
 ### Зависимости Python
 
@@ -102,19 +124,48 @@ cd makenanalog
 # Или просто скачайте и распакуйте архив
 ```
 
-### Шаг 2: Установка зависимостей
+### Шаг 2: Проверка установки Python
+
+Сначала убедитесь, что Python установлен правильно:
+
+```bash
+# Проверить версию Python
+python --version
+# или
+python3 --version
+
+# Проверить установку pip
+pip --version
+# или
+pip3 --version
+```
+
+Если Python не установлен:
+- **Windows/macOS**: Скачайте с [python.org](https://www.python.org/downloads/)
+- **Linux**: Используйте менеджер пакетов:
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install python3 python3-pip
+  
+  # Fedora
+  sudo dnf install python3 python3-pip
+  ```
+
+### Шаг 3: Установка зависимостей
 
 ```bash
 pip install -r requirements.txt
+# или
+pip3 install -r requirements.txt
 ```
 
-### Шаг 3: Создание конфигурации
+### Шаг 4: Создание конфигурации
 
 ```bash
 cp config.example.json config.json
 ```
 
-### Шаг 4: Настройка config.json
+### Шаг 5: Настройка config.json
 
 Откройте `config.json` и укажите:
 
@@ -132,7 +183,7 @@ cp config.example.json config.json
 }
 ```
 
-### Шаг 5: Подготовка папок
+### Шаг 6: Подготовка папок
 
 Создайте необходимые папки (или они создадутся автоматически):
 
@@ -148,28 +199,36 @@ mkdir -p "output"
 
 ### Минимальная настройка для первого запуска
 
-1. **Установите зависимости:**
+1. **Проверьте установку Python:**
+   ```bash
+   python --version  # Должна быть версия 3.8 или выше
+   pip --version     # Должна показать версию pip
+   ```
+
+2. **Установите зависимости:**
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Создайте config.json:**
+3. **Создайте config.json:**
    ```bash
    cp config.example.json config.json
    ```
 
-3. **Добавьте хотя бы один API ключ** в `config.json`:
+4. **Добавьте хотя бы один API ключ** в `config.json`:
    - Для Gemini: `gemini_api_key`
    - Для OpenAI: `openai_api_key`
    - Для Wavespeed: `wavespeed_api_key`
 
-4. **Подготовьте изображения:**
+5. **Подготовьте изображения:**
    - Поместите **минимум 2 референсных изображения** в `Influencer Reference Images/`
    - Поместите **sample изображения** в `Sample Dataset/`
 
-5. **Запустите скрипт:**
+6. **Запустите скрипт:**
    ```bash
    python dataset_creation.py
+   # или
+   python3 dataset_creation.py
    ```
 
 При первом запуске появится **интерактивное меню** для выбора всех настроек!
