@@ -1358,6 +1358,7 @@ def interactive_menu(config: Config) -> Config:
         print(f"         • {i18n.t('seedream_v4_4')}")
         print(f"         • {i18n.t('seedream_v4_5')}")
         print(f"         • {i18n.t('seedream_v4_6')}")
+        print(f"         • {i18n.t('seedream_v4_7')}")
         print(f"\n   {i18n.t('image_to_video')}")
         print("      [4] alibaba/wan-2.5/image-to-video")
         print(f"         • {i18n.t('wan_25_1')}")
@@ -1400,7 +1401,8 @@ def interactive_menu(config: Config) -> Config:
                         print(f"   ⚠️  {i18n.t('please_select_1_or_2')} (1-6)")
         
         # Дополнительные настройки для Wavespeed
-        if 'edit' in config.wavespeed_model:
+        # Настройки разрешения для Nano Banana Pro и Seedream моделей
+        if 'edit' in config.wavespeed_model or 'seedream' in config.wavespeed_model.lower():
             print("\n5️⃣  Разрешение для Wavespeed:")
             print(f"   Текущее значение: {config.wavespeed_resolution}")
             print("\n   [1] 1k (1024×1024 или аналогичное)")
