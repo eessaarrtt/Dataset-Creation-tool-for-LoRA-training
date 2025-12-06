@@ -13,8 +13,7 @@ A full-featured Python script for creating image datasets with automatic prompt 
 7. [Usage](#usage)
 8. [Caption Generation for LoRA](#caption-generation-for-lora)
 9. [Profile System](#profile-system)
-10. [Testing](#testing)
-11. [Troubleshooting](#troubleshooting)
+10. [Troubleshooting](#troubleshooting)
 12. [API Keys](#api-keys)
 
 ---
@@ -366,26 +365,6 @@ profiles/
 **Not saved in profile:**
 - API keys (stored in `config.json`)
 - Folder paths (stored in `config.json`)
-
----
-
-## 🧪 Testing
-
-### Test with One Image
-
-1. Set in `config.json`: `"limit_sample_images": 1`
-2. Run the script:
-   ```bash
-   python dataset_creation.py --no-interactive
-   ```
-
-### Check Results
-
-After testing, check:
-
-1. **output/** folder - prompts and images should be created
-2. **output/lora_dataset/** folder - if caption generation is enabled
-3. **Zip archive** - if caption generation is enabled
 
 ---
 
