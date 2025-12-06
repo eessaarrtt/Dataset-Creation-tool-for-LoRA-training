@@ -8,3 +8,15 @@
 
 Результаты будут сохранены в папку output/
 
+---
+
+Place sample images (full scenes) here for processing.
+
+Format: JPG, PNG, GIF, BMP, WebP
+
+The script will process all images from this folder and create for each:
+- Prompt (file *_prompt.txt)
+- Generated image (file *_generated.png)
+
+Results will be saved to the output/ folder
+
