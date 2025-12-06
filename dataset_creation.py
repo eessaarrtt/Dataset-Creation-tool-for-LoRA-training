@@ -331,28 +331,49 @@ class PromptGenerator:
         """Генерирует промпт на основе изображений"""
         # Используем один и тот же промпт для обоих шаблонов
         # Разница только в количестве обрабатываемых изображений
-        prompt_text = self._get_prompt_template()
+        # Получаем модель Wavespeed из конфига для правильного промпта
+        wavespeed_model = getattr(self.config, 'wavespeed_model', '')
+        prompt_text = self._get_prompt_template(wavespeed_model)
         
         if self.config.ai_provider == 'gemini':
             return self._generate_with_gemini(prompt_text, ref_images, sample_image)
         else:
             return self._generate_with_openai(prompt_text, ref_images, sample_image)
     
-    def _get_prompt_template(self) -> str:
-        """Единый детальный промпт для обоих шаблонов (bulk и detailed)"""
-        return """You are Gemini 2.5, an expert prompt engineer specializing in the Seedream 4.0 AI model. You create complete, detailed, and technically precise image generation prompts.
+    def _get_prompt_template(self, wavespeed_model: str = '') -> str:
+        """Детальный промпт, адаптированный под выбранную модель Wavespeed"""
+        
+        # Определяем модель и создаем соответствующий промпт
+        model_name = ""
+        model_version = ""
+        
+        if 'seedream-v4.5' in wavespeed_model.lower() or 'seedream-v4.5' in wavespeed_model:
+            model_name = "Seedream v4.5"
+            model_version = "4.5"
+        elif 'seedream-v4' in wavespeed_model.lower() and 'v4.5' not in wavespeed_model.lower():
+            model_name = "Seedream v4.0"
+            model_version = "4.0"
+        elif 'nano-banana' in wavespeed_model.lower() or 'nano-banana-pro' in wavespeed_model.lower():
+            model_name = "Nano Banana Pro"
+            model_version = "Pro"
+        else:
+            # По умолчанию используем Seedream 4.0
+            model_name = "Seedream v4.0"
+            model_version = "4.0"
+        
+        return f"""You are an expert prompt engineer specializing in the {model_name} AI model. You create complete, detailed, and technically precise image generation prompts.
 
-Primary Directive: Your task is to analyze Reference Image 3 (a complete scene) and generate a single, comprehensive prompt for Seedream 4.0. This prompt will instruct the model on how to use a total of three reference images.
+Primary Directive: Your task is to analyze Reference Image 3 (a complete scene) and generate a single, comprehensive prompt for {model_name}. This prompt will instruct the model on how to use a total of three reference images.
 
-Critical Context (Non-negotiable): Seedream will always receive 3 reference images in this specific order:
+Critical Context (Non-negotiable): {model_name} will always receive 3 reference images in this specific order:
 Images 1 & 2: Provide the subject's complete face structure, facial features, and identity.
 Image 3: The complete scene reference (this is the image you will be given to analyze).
-Your analysis must focus exclusively on Image 3. Your generated prompt must correctly instruct Seedream on this specific 3-image workflow.
+Your analysis must focus exclusively on Image 3. Your generated prompt must correctly instruct {model_name} on this specific 3-image workflow.
 
 Your Generation Task:
 You will be given Image 3.
 You will analyze Image 3 ONLY.
-You will output ONLY the complete, formatted prompt for Seedream. Do not add any conversational preamble, explanation, or text outside the specified format.
+You will output ONLY the complete, formatted prompt for {model_name}. Do not add any conversational preamble, explanation, or text outside the specified format.
 
 Mandatory Output Format (Strict Template):
 Use the first two reference images for the subject's complete face, features, and identity. Use reference image 3 as the complete reference for all other elements: clothing, pose, action, body type, scene composition, background environment, lighting, and overall atmosphere.
