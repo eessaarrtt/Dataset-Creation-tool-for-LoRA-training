@@ -348,10 +348,10 @@ class PromptGenerator:
         model_version = ""
         
         if 'seedream-v4.5' in wavespeed_model.lower() or 'seedream-v4.5' in wavespeed_model:
-            model_name = "Seedream v4.5"
+            model_name = "Seedream v4.5 Edit"
             model_version = "4.5"
         elif 'seedream-v4' in wavespeed_model.lower() and 'v4.5' not in wavespeed_model.lower():
-            model_name = "Seedream v4.0"
+            model_name = "Seedream v4 Edit"
             model_version = "4.0"
         elif 'nano-banana' in wavespeed_model.lower() or 'nano-banana-pro' in wavespeed_model.lower():
             model_name = "Nano Banana Pro"
@@ -1347,7 +1347,7 @@ def interactive_menu(config: Config) -> Config:
         print(f"         • {i18n.t('nano_banana_4')}")
         print(f"         • {i18n.t('nano_banana_5')}")
         print(f"         • {i18n.t('nano_banana_6')}")
-        print(f"\n      [2] bytedance/seedream-v4.5")
+        print(f"\n      [2] bytedance/seedream-v4.5/edit")
         print(f"         • {i18n.t('seedream_v45_1')}")
         print(f"         • {i18n.t('seedream_v45_2')}")
         print(f"         • {i18n.t('seedream_v45_3')}")
@@ -1355,7 +1355,7 @@ def interactive_menu(config: Config) -> Config:
         print(f"         • {i18n.t('seedream_v45_5')}")
         print(f"         • {i18n.t('seedream_v45_6')}")
         print(f"         • {i18n.t('seedream_v45_7')}")
-        print(f"\n      [3] bytedance/seedream-v4")
+        print(f"\n      [3] bytedance/seedream-v4/edit")
         print(f"         • {i18n.t('seedream_v4_1')}")
         print(f"         • {i18n.t('seedream_v4_2')}")
         print(f"         • {i18n.t('seedream_v4_3')}")
@@ -1381,8 +1381,8 @@ def interactive_menu(config: Config) -> Config:
         choice = input("\n   Ваш выбор (1-6 или Enter для пропуска): ").strip()
         models = {
             '1': 'google/nano-banana-pro/edit',
-            '2': 'bytedance/seedream-v4.5',
-            '3': 'bytedance/seedream-v4',
+            '2': 'bytedance/seedream-v4.5/edit',
+            '3': 'bytedance/seedream-v4/edit',
             '4': 'alibaba/wan-2.5/image-to-video',
             '5': 'kwaivgi/kling-v2.6-pro/image-to-video',
             '6': 'kwaivgi/kling-v2.5-turbo-pro/image-to-video'
