@@ -274,19 +274,16 @@ TRANSLATIONS = {
         
         # Описания разрешений
         'resolution_1k_1': 'Быстрая генерация',
-        'resolution_1k_2': 'Низкая стоимость ($0.14)',
-        'resolution_1k_3': 'Достаточно для большинства задач',
-        'resolution_1k_4': 'Меньше деталей чем в 4K',
-        'resolution_1k_5': 'Рекомендуется для: тестирования, быстрой обработки',
+        'resolution_1k_2': 'Достаточно для большинства задач',
+        'resolution_1k_3': 'Меньше деталей чем в 4K',
+        'resolution_1k_4': 'Рекомендуется для: тестирования, быстрой обработки',
         'resolution_2k_1': 'Баланс между качеством и скоростью',
         'resolution_2k_2': 'Хорошая детализация',
-        'resolution_2k_3': 'Средняя стоимость ($0.14)',
-        'resolution_2k_4': 'Рекомендуется для: большинства проектов',
+        'resolution_2k_3': 'Рекомендуется для: большинства проектов',
         'resolution_4k_1': 'Максимальное качество и детализация',
         'resolution_4k_2': 'Идеально для печати и профессионального использования',
         'resolution_4k_3': 'Дольше генерация',
-        'resolution_4k_4': 'Выше стоимость ($0.24)',
-        'resolution_4k_5': 'Рекомендуется для: финальных результатов, печати',
+        'resolution_4k_4': 'Рекомендуется для: финальных результатов, печати',
         
         # Описания генерации captions
         'caption_generation_desc': 'Генерация подписей создаст .txt файлы для каждого сгенерированного изображения, которые можно использовать для обучения LoRA модели.',
@@ -590,19 +587,16 @@ TRANSLATIONS = {
         
         # Описания разрешений
         'resolution_1k_1': 'Fast generation',
-        'resolution_1k_2': 'Low cost ($0.14)',
-        'resolution_1k_3': 'Sufficient for most tasks',
-        'resolution_1k_4': 'Less detail than 4K',
-        'resolution_1k_5': 'Recommended for: testing, fast processing',
+        'resolution_1k_2': 'Sufficient for most tasks',
+        'resolution_1k_3': 'Less detail than 4K',
+        'resolution_1k_4': 'Recommended for: testing, fast processing',
         'resolution_2k_1': 'Balance between quality and speed',
         'resolution_2k_2': 'Good detail',
-        'resolution_2k_3': 'Medium cost ($0.14)',
-        'resolution_2k_4': 'Recommended for: most projects',
+        'resolution_2k_3': 'Recommended for: most projects',
         'resolution_4k_1': 'Maximum quality and detail',
         'resolution_4k_2': 'Ideal for printing and professional use',
         'resolution_4k_3': 'Longer generation time',
-        'resolution_4k_4': 'Higher cost ($0.24)',
-        'resolution_4k_5': 'Recommended for: final results, printing',
+        'resolution_4k_4': 'Recommended for: final results, printing',
         
         # Описания генерации captions
         'caption_generation_desc': 'Caption generation will create .txt files for each generated image that can be used for LoRA model training.',
