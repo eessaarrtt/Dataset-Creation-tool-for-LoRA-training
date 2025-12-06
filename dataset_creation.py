@@ -1228,9 +1228,10 @@ def interactive_menu(config: Config) -> Config:
     print(f"  🎨 {i18n.t('interactive_menu_title')}")
     print("="*60)
     print(f"\n{i18n.t('select_settings')}\n")
+    print("="*60)
     
     # Выбор AI провайдера
-    print(f"1️⃣  {i18n.t('ai_provider')}:")
+    print(f"\n1️⃣  {i18n.t('ai_provider')}:")
     current_ai = config.ai_provider if config.ai_provider else i18n.t('not_selected')
     print(f"   {i18n.t('current_value')}: {current_ai}")
     print(f"\n   [1] Gemini (Google Gemini 2.5 Flash)")
@@ -1272,6 +1273,7 @@ def interactive_menu(config: Config) -> Config:
                 else:
                     print(f"   ⚠️  {i18n.t('please_select_1_or_2')}")
     
+    print("\n" + "-"*60)
     # Выбор шаблона промпта
     print(f"\n2️⃣  {i18n.t('processing_mode')}:")
     current_template = config.prompt_template if hasattr(config, 'prompt_template') and config.prompt_template else "bulk"
@@ -1302,6 +1304,7 @@ def interactive_menu(config: Config) -> Config:
     else:
         print(f"   → {i18n.t('using_value')} из config: {config.prompt_template}")
     
+    print("\n" + "-"*60)
     # Выбор провайдера генерации
     print(f"\n3️⃣  {i18n.t('image_generation_provider')}:")
     current_provider = config.image_provider if config.image_provider else i18n.t('not_selected')
@@ -1331,6 +1334,7 @@ def interactive_menu(config: Config) -> Config:
                 else:
                     print(f"   ⚠️  {i18n.t('please_select_1')}")
     
+    print("\n" + "-"*60)
     # Выбор модели Wavespeed
     if config.image_provider == 'wavespeed':
         print(f"\n4️⃣  {i18n.t('wavespeed_model')}:")
@@ -1403,6 +1407,7 @@ def interactive_menu(config: Config) -> Config:
         # Дополнительные настройки для Wavespeed
         # Настройки разрешения для Nano Banana Pro и Seedream моделей
         if 'edit' in config.wavespeed_model or 'seedream' in config.wavespeed_model.lower():
+            print("\n" + "-"*60)
             print("\n5️⃣  Разрешение для Wavespeed:")
             print(f"   Текущее значение: {config.wavespeed_resolution}")
             print("\n   [1] 1k (1024×1024 или аналогичное)")
@@ -1427,6 +1432,7 @@ def interactive_menu(config: Config) -> Config:
             else:
                 print(f"   → {i18n.t('using_value')} из config: {config.wavespeed_resolution}")
     
+    print("\n" + "-"*60)
     # Настройки для генерации captions (LoRA)
     print(f"\n6️⃣  {i18n.t('caption_generation')}:")
     current_generate = i18n.t('yes') if config.generate_captions else i18n.t('no')
@@ -1448,6 +1454,7 @@ def interactive_menu(config: Config) -> Config:
         config.generate_captions = True
         print(f"   ✓ {i18n.t('caption_enabled')}")
         
+        print("\n" + "-"*60)
         # Запрашиваем trigger name
         print(f"\n7️⃣  {i18n.t('trigger_name_prompt')}:")
         current_trigger = config.trigger_name if config.trigger_name else i18n.t('not_selected')
@@ -1470,6 +1477,7 @@ def interactive_menu(config: Config) -> Config:
         
         # Выбор модели OpenAI для генерации captions
         if config.generate_captions:
+            print("\n" + "-"*60)
             print(f"\n8️⃣  {i18n.t('openai_caption_model')}:")
             current_caption_model = getattr(config, 'openai_caption_model', None) or config.openai_model or "gpt-5.1"
             print(f"   {i18n.t('current_value')}: {current_caption_model}")
