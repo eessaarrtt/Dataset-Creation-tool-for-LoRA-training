@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+config.json
+profiles/
+output/
+*.log
+prompt_generation_log_*.txt
+test_prompt_output_*.txt
+
+# API keys and sensitive data
+*.key
+*.pem
+secrets/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Sample data (users should add their own)
+Sample Dataset/
+Influencer Reference Images/

@@ -1,0 +1,12 @@
+{
+  "influencer_ref_folder": "./Influencer Reference Images",
+  "sample_dataset_folder": "./Sample Dataset",
+  "output_folder": "./output",
+  "limit_ref_images": 10,
+  "limit_sample_images": 10,
+  "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE",
+  "openai_api_key": "YOUR_OPENAI_API_KEY_HERE",
+  "wavespeed_api_key": "YOUR_WAVESPEED_API_KEY_HERE",
+  "_note": "Этот файл содержит базовые настройки: пути к папкам и API ключи. API ключи можно заполнить один раз и они будут использоваться для всех профилей. Выбор провайдеров, моделей и других настроек происходит через интерактивное меню и сохраняется в профили в папке profiles/."
+}
+
