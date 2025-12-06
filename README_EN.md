@@ -371,30 +371,6 @@ profiles/
 
 ## 🧪 Testing
 
-### Test Prompt Generation (Without Image Costs)
-
-```bash
-python test_prompt_only.py
-```
-
-This script checks the AI provider without generating images.
-
-### Test OpenAI Models
-
-```bash
-# Test all models
-python test_openai_models.py
-
-# Test one model
-python test_openai_models.py --model gpt-5.1
-
-# Test caption generation and file creation
-python test_openai_models.py --test-captions
-
-# Test with custom trigger name
-python test_openai_models.py --test-captions --trigger-name "my_character"
-```
-
 ### Test with One Image
 
 1. Set in `config.json`: `"limit_sample_images": 1`
