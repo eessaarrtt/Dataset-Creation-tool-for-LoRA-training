@@ -65,6 +65,7 @@
 **⚠️ Важно о NSFW контенте:**
 - **Только Grok** поддерживает генерацию промптов и captions для NSFW контента
 - **Только Seedream v4.5** поддерживает генерацию изображений для NSFW контента
+- **Для работы с NSFW контентом необходим API ключ Grok** (см. раздел [API ключи - Grok](#grok))
 - Для работы с NSFW контентом создайте папку `nsfw/` в `Sample Dataset/` и поместите туда соответствующие изображения
 - Если NSFW контент отключен, файлы из папки `nsfw/` не будут обрабатываться
 
@@ -94,6 +95,7 @@
   - Ключ Gemini API (бесплатный, из Google AI Studio)
   - Ключ OpenAI API (платный, из OpenAI Platform)
   - Ключ Wavespeed API (платный, из Wavespeed.ai)
+  - **Ключ Grok API (обязателен для NSFW контента, из xAI Console)**
 
 **Операционные системы:**
 - ✅ Windows 10/11
@@ -187,9 +189,12 @@ cp config.example.json config.json
   "output_folder": "./output",
   "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE",
   "openai_api_key": "YOUR_OPENAI_API_KEY_HERE",
-  "wavespeed_api_key": "YOUR_WAVESPEED_API_KEY_HERE"
+  "wavespeed_api_key": "YOUR_WAVESPEED_API_KEY_HERE",
+  "grok_api_key": "YOUR_GROK_API_KEY_HERE"
 }
 ```
+
+**Примечание:** `grok_api_key` обязателен только если вы планируете работать с NSFW контентом.
 
 ### Шаг 6: Подготовка папок
 
@@ -227,6 +232,7 @@ mkdir -p "output"
    - Для Gemini: `gemini_api_key`
    - Для OpenAI: `openai_api_key`
    - Для Wavespeed: `wavespeed_api_key`
+   - **Для NSFW контента (обязательно):** `grok_api_key`
 
 5. **Подготовьте изображения:**
    - Поместите **минимум 2 референсных изображения** в `Influencer Reference Images/`
@@ -300,9 +306,12 @@ makenanalog/
   "gemini_api_key": "ваш_ключ_gemini",
   "openai_api_key": "ваш_ключ_openai",
   "wavespeed_api_key": "ваш_ключ_wavespeed",
+  "grok_api_key": "ваш_ключ_grok",
   "language": "ru"
 }
 ```
+
+**Примечание:** `grok_api_key` обязателен только если вы планируете работать с NSFW контентом.
 
 ### Параметры конфигурации
 
@@ -316,6 +325,7 @@ makenanalog/
 | `gemini_api_key` | API ключ для Gemini | - |
 | `openai_api_key` | API ключ для OpenAI | - |
 | `wavespeed_api_key` | API ключ для Wavespeed | - |
+| `grok_api_key` | API ключ для Grok (обязателен для NSFW контента) | - |
 | `language` | Язык интерфейса (`ru` или `en`) | `ru` |
 
 ---
@@ -878,6 +888,34 @@ pip install requests  # Для HTTP запросов
 - Seedream v4.5: $0.04 за изображение (любое разрешение)
 - Seedream v4: $0.027 за изображение (любое разрешение)
 - Video модели: зависит от длительности
+
+#### Grok
+
+**⚠️ Обязателен для работы с NSFW контентом!**
+
+1. Перейдите на [xAI Console](https://console.x.ai/)
+2. Зарегистрируйтесь или войдите в аккаунт
+3. Перейдите в раздел "API Keys" или "Settings"
+4. Создайте новый API ключ
+5. Скопируйте ключ и добавьте в `config.json`:
+   ```json
+   "grok_api_key": "ваш_ключ_здесь"
+   ```
+
+**Особенности:**
+- Платный сервис (от xAI, компания Elon Musk)
+- Поддержка NSFW контента для промптов и captions
+- Использует OpenAI-совместимый API
+- Модель: `grok-4-1-fast-reasoning` (рекомендуется)
+
+**Цены:**
+- Зависит от модели и использования
+- Актуальные цены смотрите на [xAI Console](https://console.x.ai/)
+
+**⚠️ Важно:**
+- Grok API ключ **обязателен** для работы с NSFW контентом
+- Без Grok API ключа вы не сможете генерировать промпты и captions для NSFW изображений
+- Grok - единственный провайдер, который поддерживает NSFW контент
 
 ### Безопасность API ключей
 

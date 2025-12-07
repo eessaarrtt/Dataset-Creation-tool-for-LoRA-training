@@ -65,6 +65,7 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 **⚠️ Important about NSFW content:**
 - **Only Grok** supports generating prompts and captions for NSFW content
 - **Only Seedream v4.5** supports generating images for NSFW content
+- **Grok API key is required for NSFW content** (see [API Keys - Grok](#grok) section)
 - To work with NSFW content, create an `nsfw/` folder in `Sample Dataset/` and place corresponding images there
 - If NSFW content is disabled, files from the `nsfw/` folder will not be processed
 
@@ -94,6 +95,7 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
   - Gemini API key (free, from Google AI Studio)
   - OpenAI API key (paid, from OpenAI Platform)
   - Wavespeed API key (paid, from Wavespeed.ai)
+  - **Grok API key (required for NSFW content, from xAI Console)**
 
 **Operating Systems:**
 - ✅ Windows 10/11
@@ -187,9 +189,12 @@ Open `config.json` and specify:
   "output_folder": "./output",
   "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE",
   "openai_api_key": "YOUR_OPENAI_API_KEY_HERE",
-  "wavespeed_api_key": "YOUR_WAVESPEED_API_KEY_HERE"
+  "wavespeed_api_key": "YOUR_WAVESPEED_API_KEY_HERE",
+  "grok_api_key": "YOUR_GROK_API_KEY_HERE"
 }
 ```
+
+**Note:** `grok_api_key` is required only if you plan to work with NSFW content.
 
 ### Step 6: Prepare Folders
 
@@ -227,6 +232,7 @@ mkdir -p "output"
    - For Gemini: `gemini_api_key`
    - For OpenAI: `openai_api_key`
    - For Wavespeed: `wavespeed_api_key`
+   - **For NSFW content (required):** `grok_api_key`
 
 5. **Prepare images:**
    - Place **at least 2 reference images** in `Influencer Reference Images/`
@@ -300,9 +306,12 @@ makenanalog/
   "gemini_api_key": "your_gemini_key",
   "openai_api_key": "your_openai_key",
   "wavespeed_api_key": "your_wavespeed_key",
+  "grok_api_key": "your_grok_key",
   "language": "en"
 }
 ```
+
+**Note:** `grok_api_key` is required only if you plan to work with NSFW content.
 
 ### Configuration Parameters
 
@@ -316,6 +325,7 @@ makenanalog/
 | `gemini_api_key` | API key for Gemini | - |
 | `openai_api_key` | API key for OpenAI | - |
 | `wavespeed_api_key` | API key for Wavespeed | - |
+| `grok_api_key` | API key for Grok (required for NSFW content) | - |
 | `language` | Interface language (`ru` or `en`) | `ru` |
 
 ---
@@ -878,6 +888,34 @@ pip install requests  # For HTTP requests
 - Seedream v4.5: $0.04 per image (any resolution)
 - Seedream v4: $0.027 per image (any resolution)
 - Video models: depends on duration
+
+#### Grok
+
+**⚠️ Required for NSFW content!**
+
+1. Go to [xAI Console](https://console.x.ai/)
+2. Register or sign in
+3. Navigate to "API Keys" or "Settings" section
+4. Create a new API key
+5. Copy the key and add to `config.json`:
+   ```json
+   "grok_api_key": "your_key_here"
+   ```
+
+**Features:**
+- Paid service (from xAI, Elon Musk's company)
+- NSFW content support for prompts and captions
+- Uses OpenAI-compatible API
+- Model: `grok-4-1-fast-reasoning` (recommended)
+
+**Pricing:**
+- Depends on model and usage
+- Check current prices at [xAI Console](https://console.x.ai/)
+
+**⚠️ Important:**
+- Grok API key is **required** for working with NSFW content
+- Without Grok API key, you cannot generate prompts and captions for NSFW images
+- Grok is the only provider that supports NSFW content
 
 ### API Key Security
 
