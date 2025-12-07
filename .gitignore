@@ -54,3 +54,7 @@ secrets/
 # Promotional files (not for GitHub)
 PROMO_RU.md
 PROMO_EN.md
+
+# Generated output files (keep README.txt)
+output/*
+!output/README.txt
