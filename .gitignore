@@ -58,3 +58,9 @@ PROMO_EN.md
 # Generated output files (keep README.txt)
 output/*
 !output/README.txt
+
+# Sample images (keep README.txt files)
+Sample Dataset/**/*.{png,jpg,jpeg,gif,bmp,webp}
+!Sample Dataset/**/README.txt
+Influencer Reference Images/**/*.{png,jpg,jpeg,gif,bmp,webp}
+!Influencer Reference Images/**/README.txt
