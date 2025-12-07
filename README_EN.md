@@ -439,6 +439,182 @@ Example:
    Your choice: [Use arrow keys to navigate]
 ```
 
+### 📊 Interactive Menu Flow Diagrams
+
+#### Main Menu Flow
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ 1. Profile Selection                                     │
+│    ├─ [1-N] Select existing profile                     │
+│    ├─ [0] Create new profile                            │
+│    └─ [Enter] Skip (temporary settings)                 │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 2. NSFW Content Question                                │
+│    ├─ [1] Yes → Auto-configured:                        │
+│    │      • Grok for NSFW prompts                       │
+│    │      • Seedream v4.5 for NSFW generation           │
+│    │      • Grok for NSFW captions                       │
+│    │      → Proceed to normal content setup             │
+│    │                                                    │
+│    ├─ [2] No → Main settings apply to all content       │
+│    │                                                    │
+│    └─ [Enter] Skip → = "No"                            │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 3. AI Provider for Prompts                              │
+│    (If NSFW=Yes: for normal content)                    │
+│    (If NSFW=No: for all content)                       │
+│    ├─ [1] Gemini                                        │
+│    ├─ [2] OpenAI (GPT-5.1)                              │
+│    ├─ [3] Grok                                          │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 4. Processing Mode                                      │
+│    ├─ [1] bulk - Batch processing                      │
+│    ├─ [2] detailed - Single image                      │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 5. Image Generation Provider                            │
+│    (If NSFW=Yes: for normal content)                    │
+│    ├─ [1] Wavespeed                                     │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 6. Wavespeed Model                                      │
+│    (If NSFW=Yes: for normal content)                    │
+│    ├─ [1] nano-banana-pro/edit                          │
+│    ├─ [2] seedream-v4.5/edit                            │
+│    ├─ [3] seedream-v4/edit                              │
+│    ├─ [4-6] Video models (⚠️ In development)            │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 7. Resolution                                           │
+│    ├─ [1] 1k (1920×1920)                                │
+│    ├─ [2] 2k (2048×2048)                                │
+│    ├─ [3] 4k (4096×4096)                                │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 8. Caption Generation                                   │
+│    (If NSFW=Yes: for normal content)                    │
+│    ├─ [1] Yes → Proceed to step 9                      │
+│    ├─ [2] No → Skip captions                            │
+│    └─ [Enter] Use from config/profile                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 9. Trigger Name (only if captions=Yes)                  │
+│    └─ Enter character name (one word)                  │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 10. Caption Provider (only if captions=Yes)             │
+│     ├─ [1] OpenAI → Auto GPT-5.1                        │
+│     ├─ [2] Grok → Auto grok-4-1-fast-reasoning          │
+│     └─ [Enter] Use from config/profile                  │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 11. Final Summary                                       │
+│     └─ Shows all selected settings                      │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 12. Save Profile                                        │
+│     ├─ [1] Yes → Enter profile name → Save              │
+│     └─ [2] No → Skip                                    │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Scenario 1: NSFW Content Enabled
+
+```
+NSFW = Yes
+  │
+  ├─ Auto-configured for NSFW:
+  │   • AI Provider: Grok
+  │   • Prompt Model: grok-4-1-fast-reasoning
+  │   • Wavespeed Model: seedream-v4.5/edit
+  │   • Caption Provider: Grok
+  │   • Caption Model: grok-4-1-fast-reasoning
+  │
+  └─ Settings for Normal Content:
+      ├─ AI Provider: [Choice: Gemini/OpenAI/Grok]
+      ├─ Mode: [Choice: bulk/detailed]
+      ├─ Wavespeed Model: [Choice: nano-banana/seedream-v4/seedream-v4.5]
+      ├─ Resolution: [Choice: 1k/2k/4k]
+      ├─ Captions: [Choice: Yes/No]
+      │   └─ If Yes:
+      │       ├─ Trigger Name: [Input]
+      │       └─ Caption Provider: [Choice: OpenAI/Grok]
+      │           ├─ OpenAI → GPT-5.1
+      │           └─ Grok → grok-4-1-fast-reasoning
+      └─ Result: Different settings for NSFW and normal
+```
+
+#### Scenario 2: NSFW Content Disabled
+
+```
+NSFW = No (or Enter)
+  │
+  └─ Main Settings (apply to all content):
+      ├─ AI Provider: [Choice: Gemini/OpenAI/Grok]
+      ├─ Mode: [Choice: bulk/detailed]
+      ├─ Wavespeed Model: [Choice: nano-banana/seedream-v4/seedream-v4.5]
+      ├─ Resolution: [Choice: 1k/2k/4k]
+      ├─ Captions: [Choice: Yes/No]
+      │   └─ If Yes:
+      │       ├─ Trigger Name: [Input]
+      │       └─ Caption Provider: [Choice: OpenAI/Grok]
+      │           ├─ OpenAI → GPT-5.1
+      │           └─ Grok → grok-4-1-fast-reasoning
+      └─ Result: Same settings for all content
+```
+
+#### Possible Combinations Matrix
+
+| NSFW | AI Provider | Wavespeed Model | Captions | Caption Provider | Result |
+|------|-------------|-----------------|----------|------------------|--------|
+| Yes  | Gemini      | nano-banana     | Yes      | OpenAI           | NSFW: Grok+Seedream v4.5, Normal: Gemini+nano-banana+OpenAI |
+| Yes  | OpenAI      | seedream-v4     | Yes      | Grok             | NSFW: Grok+Seedream v4.5, Normal: OpenAI+seedream-v4+Grok |
+| Yes  | Grok        | seedream-v4.5   | No       | -                | NSFW: Grok+Seedream v4.5, Normal: Grok+seedream-v4.5 |
+| No   | Gemini      | nano-banana     | Yes      | OpenAI           | All: Gemini+nano-banana+OpenAI |
+| No   | OpenAI      | seedream-v4     | Yes      | Grok             | All: OpenAI+seedream-v4+Grok |
+| No   | Grok        | seedream-v4.5   | No       | -                | All: Grok+seedream-v4.5 |
+
+#### Important Notes
+
+1. **Auto NSFW Settings** (if NSFW=Yes):
+   - Cannot be changed through menu
+   - Always: Grok + Seedream v4.5 + Grok for captions
+
+2. **Skipping Steps** (Enter):
+   - Uses values from config.json or profile
+   - If no value → uses default
+
+3. **Required Steps**:
+   - Image generation provider (Wavespeed) - must be selected
+   - Trigger name - required if captions=Yes
+
+4. **File Processing**:
+   - If NSFW=Yes: files from `nsfw/` processed with NSFW settings
+   - If NSFW=No: files from `nsfw/` **are NOT processed**
+   - Files from `normal/` always processed with normal content settings
+
+---
+
 ### Non-Interactive Mode
 
 ```bash
