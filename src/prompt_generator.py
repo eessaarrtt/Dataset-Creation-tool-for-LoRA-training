@@ -82,10 +82,28 @@ class PromptGenerator:
         # Это критически важно для правильного использования референсных изображений
         # Wavespeed получает 3 изображения: [ref1, ref2, sample]
         # Первые два должны использоваться для лица, третье - для сцены
-        face_instruction = "IMPORTANT: Reference Image 1 and Reference Image 2 must be used for the subject's complete face, facial structure, facial features, and identity. The face in the generated image must exactly match the face from Reference Images 1 and 2. Reference Image 3 is for the scene, pose, clothing, hairstyle, makeup, and background. "
+        face_instruction = """CRITICAL INSTRUCTION FOR WAVESPEED API:
+You are receiving 3 reference images in this exact order:
+- Image 1: Reference face image (use for face ONLY)
+- Image 2: Reference face image (use for face ONLY)
+- Image 3: Scene reference (use for everything EXCEPT face)
+
+MANDATORY: The generated image MUST use Images 1 and 2 for the subject's COMPLETE FACE, facial structure, facial features, eyes, nose, mouth, chin, and all facial characteristics. The face in the output MUST be IDENTICAL to the face from Images 1 and 2.
+
+DO NOT use the face from Image 3. Image 3 is ONLY for: clothing, pose, body, scene, background, lighting, and atmosphere.
+
+The face MUST come from Images 1 and 2. This is non-negotiable.
+
+Now generate the prompt following this instruction:
+
+"""
         
         # Объединяем инструкцию с сгенерированным промптом
         final_prompt = face_instruction + generated_prompt
+        
+        # Также добавляем напоминание в конец промпта для усиления
+        reminder = "\n\nREMINDER: The face in the generated image MUST match the face from Reference Images 1 and 2. Do NOT use the face from Image 3."
+        final_prompt = final_prompt + reminder
         
         return final_prompt
     
