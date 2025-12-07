@@ -24,7 +24,7 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 
 ### Main Components:
 
-- **Prompt Generation**: Uses Gemini or OpenAI to analyze reference and sample images
+- **Prompt Generation**: Uses Gemini, OpenAI or Grok to analyze reference and sample images
 - **Image Generation**: Creates new images through the Wavespeed API
 - **Caption Generation**: Automatically creates detailed captions for LoRA training
 - **Dataset Packaging**: Creates a zip archive with images and captions
@@ -234,12 +234,55 @@ mkdir -p "output"
 
 6. **Run the script:**
    ```bash
-   python dataset_creation.py
+   python main.py
    # or
-   python3 dataset_creation.py
+   python3 main.py
    ```
+   
+   **Note:** For backward compatibility, you can also use `python dataset_creation.py`, but `main.py` is recommended
 
 On first run, an **interactive menu** will appear for selecting all settings!
+
+---
+
+## 📁 Project Structure
+
+The project is organized in a modular structure for better maintainability:
+
+```
+makenanalog/
+├── src/                          # Main application code
+│   ├── __init__.py              # Package initialization
+│   ├── config.py                # Configuration and profile management
+│   ├── file_manager.py          # File system operations
+│   ├── prompt_generator.py      # Prompt generation (Gemini/OpenAI/Grok)
+│   ├── image_generator.py       # Image generation (Wavespeed)
+│   ├── caption_generator.py     # Caption generation for LoRA
+│   ├── dataset_creator.py       # Dataset creation orchestration
+│   ├── interactive_menu.py     # Interactive menu
+│   └── utils.py                 # Utility functions
+│
+├── main.py                       # Application entry point (recommended)
+├── dataset_creation.py          # Backward compatibility file
+├── i18n.py                       # Localization system
+│
+├── config.example.json          # Configuration example
+├── config.json                  # Main configuration file
+│
+├── profiles/                     # Settings profiles
+│   └── *.json
+│
+├── Sample Dataset/               # Sample images
+│   ├── normal/                  # Normal content
+│   └── nsfw/                    # NSFW content (optional)
+│
+└── Influencer Reference Images/  # Reference images
+```
+
+**Important:**
+- Use `main.py` to run the application (recommended)
+- `dataset_creation.py` is kept for backward compatibility
+- All main modules are in the `src/` folder
 
 ---
 
@@ -290,7 +333,7 @@ On first run, an **interactive menu** will appear for selecting all settings!
    ```
 3. Run the script:
    ```bash
-   python dataset_creation.py
+   python main.py
    ```
 
 **macOS / Linux:**
@@ -303,9 +346,9 @@ On first run, an **interactive menu** will appear for selecting all settings!
    ```
 3. Run the script:
    ```bash
-   python dataset_creation.py
+   python main.py
    # or
-   python3 dataset_creation.py
+   python3 main.py
    ```
 
 ### Method 2: IDE (Integrated Development Environment)
@@ -315,19 +358,19 @@ You can run the script from popular code editors:
 **Visual Studio Code:**
 1. Open VS Code
 2. File → Open Folder → Select project folder
-3. Open `dataset_creation.py`
+3. Open `main.py`
 4. Right-click → "Run Python File in Terminal"
    - Or press `F5` and select "Python File"
 
 **PyCharm:**
 1. Open PyCharm
 2. File → Open → Select project folder
-3. Right-click `dataset_creation.py` → "Run 'dataset_creation'"
+3. Right-click `main.py` → "Run 'main'"
    - Or press `Shift + F10`
 
 **IDLE (Python's built-in IDE):**
 1. Open IDLE
-2. File → Open → Select `dataset_creation.py`
+2. File → Open → Select `main.py`
 3. Run → Run Module (or press `F5`)
 
 ### Method 3: Create a Shortcut File
@@ -338,7 +381,7 @@ You can run the script from popular code editors:
    ```batch
    @echo off
    cd /d "%~dp0"
-   python dataset_creation.py
+   python main.py
    pause
    ```
 3. Save and double-click to run
@@ -349,7 +392,7 @@ You can run the script from popular code editors:
    ```bash
    #!/bin/bash
    cd "$(dirname "$0")"
-   python3 dataset_creation.py
+   python3 main.py
    ```
 3. Make it executable:
    ```bash
@@ -362,7 +405,7 @@ You can run the script from popular code editors:
 If you want to run parts of the script interactively:
 1. Install Jupyter: `pip install jupyter`
 2. Create a notebook: `jupyter notebook`
-3. Import and use functions from `dataset_creation.py`
+3. Import and use functions from modules in the `src/` folder
 
 ---
 
@@ -371,8 +414,10 @@ If you want to run parts of the script interactively:
 ### Interactive Mode (Recommended)
 
 ```bash
-python dataset_creation.py
+python main.py
 ```
+
+**Note:** For backward compatibility, you can also use `python dataset_creation.py`, but `main.py` is recommended
 
 An interactive menu will appear with:
 - **Arrow-key navigation** (if `inquirer` is installed)
@@ -397,7 +442,7 @@ Example:
 ### Non-Interactive Mode
 
 ```bash
-python dataset_creation.py --no-interactive
+python main.py --no-interactive
 ```
 
 Uses only settings from `config.json` and command-line arguments.
@@ -406,19 +451,19 @@ Uses only settings from `config.json` and command-line arguments.
 
 ```bash
 # Use OpenAI instead of Gemini
-python dataset_creation.py --ai-provider openai --no-interactive
+python main.py --ai-provider openai --no-interactive
 
 # Use specific profile
-python dataset_creation.py --profile my_profile --no-interactive
+python main.py --profile my_profile --no-interactive
 
 # Specify different config file
-python dataset_creation.py --config my_config.json
+python main.py --config my_config.json
 ```
 
 ### Full List of Arguments
 
 ```bash
-python dataset_creation.py --help
+python main.py --help
 ```
 
 ---
@@ -503,10 +548,10 @@ Profiles allow saving different configurations for different tasks.
 
 ```bash
 # Use specific profile
-python dataset_creation.py --profile production
+python main.py --profile production
 
 # Show list of all profiles
-python dataset_creation.py --list-profiles
+python main.py --list-profiles
 ```
 
 ### Where Profiles are Stored
