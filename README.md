@@ -6,8 +6,9 @@
 
 ### Choose your language / Выберите язык:
 
-- 🇷🇺 **[Русская инструкция (Russian Guide)](README_RU.md)** - Полная пошаговая инструкция на русском языке
-- 🇬🇧 **[English Guide](README_EN.md)** - Complete step-by-step guide in English
+- 📖 **[Пошаговая инструкция (Step-by-Step Guide)](ИНСТРУКЦИЯ.md)** - Подробное руководство с примерами и советами
+- 🇷🇺 **[Русская документация (Russian Documentation)](README_RU.md)** - Полная документация на русском языке
+- 🇬🇧 **[English Documentation](README_EN.md)** - Complete documentation in English
 
 ---
 
@@ -182,8 +183,9 @@ makenanalog/
 ## 📖 Full Documentation
 
 For detailed instructions, please see:
-- 🇷🇺 [README_RU.md](README_RU.md) - Полная инструкция на русском
-- 🇬🇧 [README_EN.md](README_EN.md) - Complete guide in English
+- 📖 [ИНСТРУКЦИЯ.md](ИНСТРУКЦИЯ.md) - Пошаговая инструкция с примерами (Step-by-step guide with examples)
+- 🇷🇺 [README_RU.md](README_RU.md) - Полная документация на русском (Full documentation in Russian)
+- 🇬🇧 [README_EN.md](README_EN.md) - Complete documentation in English
 
 ---
 
