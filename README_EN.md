@@ -36,7 +36,7 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 ### Core Functions
 
 - ✅ **Local file storage** (instead of cloud services)
-- ✅ **AI provider selection** for prompt generation: **Gemini** or **OpenAI**
+- ✅ **AI provider selection** for prompt generation: **Gemini**, **OpenAI** or **Grok**
 - ✅ **Image generation** through **Wavespeed** API
 - ✅ **Automatic batch processing** of multiple images
 - ✅ **Caption generation** for LoRA training
@@ -49,7 +49,8 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 
 **AI for Prompts:**
 - Gemini 2.5 Flash (fast, free)
-- OpenAI GPT-5.1, GPT-4o (only models with vision support)
+- OpenAI GPT-5.1 (only OpenAI model version 5)
+- Grok 4.1 Fast Reasoning (from xAI, supports NSFW content)
 
 **Image Generation (Wavespeed):**
 - Image-to-Image: `google/nano-banana-pro/edit`, `bytedance/seedream-v4.5/edit`, `bytedance/seedream-v4/edit`
@@ -58,7 +59,14 @@ This project is a Python equivalent of a Make.com workflow for automatically cre
 - Image-to-Video: `alibaba/wan-2.5/image-to-video`, `kwaivgi/kling-v2.6-pro/image-to-video`, `kwaivgi/kling-v2.5-turbo-pro/image-to-video` ⚠️ **In Development** - modules are added but usage scenarios are not yet implemented. Will be available in future versions.
 
 **Caption Generation:**
-- OpenAI GPT-5.1, GPT-4o (only models with vision support)
+- OpenAI GPT-5.1 (only OpenAI model version 5)
+- Grok 4.1 Fast Reasoning (supports NSFW content)
+
+**⚠️ Important about NSFW content:**
+- **Only Grok** supports generating prompts and captions for NSFW content
+- **Only Seedream v4.5** supports generating images for NSFW content
+- To work with NSFW content, create an `nsfw/` folder in `Sample Dataset/` and place corresponding images there
+- If NSFW content is disabled, files from the `nsfw/` folder will not be processed
 
 ---
 

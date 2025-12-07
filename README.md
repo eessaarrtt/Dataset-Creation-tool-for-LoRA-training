@@ -81,6 +81,11 @@ This project is licensed under **MIT License with Commercial Use Restrictions**.
 
 5. **Run:**
    ```bash
+   python main.py
+   ```
+   
+   Or for backward compatibility / Или для обратной совместимости:
+   ```bash
    python dataset_creation.py
    ```
 
@@ -93,12 +98,12 @@ This project is licensed under **MIT License with Commercial Use Restrictions**.
 **Windows:**
 - Open **Command Prompt** (cmd) or **PowerShell**
 - Navigate to project folder: `cd path\to\makenanalog`
-- Run: `python dataset_creation.py`
+- Run: `python main.py`
 
 **macOS / Linux:**
 - Open **Terminal**
 - Navigate to project folder: `cd /path/to/makenanalog`
-- Run: `python dataset_creation.py` or `python3 dataset_creation.py`
+- Run: `python main.py` or `python3 main.py`
 
 ### IDE (Integrated Development Environment)
 
@@ -114,7 +119,7 @@ You can also run the script from popular IDEs:
 ```batch
 @echo off
 cd /d "%~dp0"
-python dataset_creation.py
+python main.py
 pause
 ```
 
@@ -122,7 +127,7 @@ pause
 ```bash
 #!/bin/bash
 cd "$(dirname "$0")"
-python3 dataset_creation.py
+python3 main.py
 ```
 
 Then make it executable: `chmod +x run.sh`
@@ -136,12 +141,41 @@ After creating the shortcut files above, you can double-click them to run the sc
 ## ✨ Features
 
 - ✅ Local file storage
-- ✅ AI provider selection (Gemini/OpenAI)
+- ✅ AI provider selection (Gemini/OpenAI/Grok)
 - ✅ Image generation via Wavespeed API
 - ✅ Automatic caption generation for LoRA
 - ✅ Interactive menu
 - ✅ Profile system
 - ✅ Multilingual support (Russian/English)
+- ✅ Modular architecture for easy maintenance
+
+---
+
+## 📁 Project Structure / Структура проекта
+
+The project is organized in a clean modular structure:
+
+```
+makenanalog/
+├── src/                    # Main application code / Основной код
+│   ├── config.py          # Configuration management
+│   ├── file_manager.py    # File system operations
+│   ├── prompt_generator.py # AI prompt generation
+│   ├── image_generator.py  # Image generation
+│   ├── caption_generator.py # Caption generation
+│   ├── dataset_creator.py   # Main orchestration
+│   ├── interactive_menu.py # Interactive UI
+│   └── utils.py           # Utilities
+│
+├── main.py                 # Entry point / Точка входа
+├── dataset_creation.py     # Backward compatibility
+├── i18n.py                 # Localization system
+└── ...
+```
+
+**For detailed structure documentation, see [STRUCTURE.md](STRUCTURE.md)**
+
+**Для подробного описания структуры см. [STRUCTURE.md](STRUCTURE.md)**
 
 ---
 

@@ -77,7 +77,14 @@ TRANSLATIONS = {
         'resolution': 'Разрешение для Wavespeed',
         'caption_generation': 'Генерация подписей (captions) для LoRA обучения',
         'trigger_name_prompt': 'Имя персонажа (trigger name) для LoRA',
+        'caption_provider': 'Провайдер для генерации captions',
+        'caption_provider_desc': 'Выберите провайдера для генерации подписей к изображениям',
         'openai_caption_model': 'Модель OpenAI для генерации captions',
+        'grok_caption_model': 'Модель Grok для генерации captions',
+        'openai_caption_desc': 'Проверенная модель с поддержкой vision',
+        'grok_caption_desc': 'Поддержка NSFW контента, лучшая для чувствительных изображений',
+        'openai_nsfw_warning': 'Не поддерживает NSFW контент - может отказать в генерации для чувствительных изображений',
+        'grok_nsfw_support': 'Поддерживает NSFW контент - может генерировать captions для любых изображений',
         
         # Настройки
         'ai_provider': 'AI провайдер для генерации промптов',
@@ -92,6 +99,7 @@ TRANSLATIONS = {
         # Провайдеры
         'gemini': 'Gemini',
         'openai': 'OpenAI',
+        'grok': 'Grok',
         'wavespeed': 'Wavespeed',
         
         # Шаблоны
@@ -173,6 +181,13 @@ TRANSLATIONS = {
         'wavespeed_api_error': 'Wavespeed API вернул ошибку: {error}',
         'server_response': 'Ответ сервера',
         'unknown_error': 'Неизвестная ошибка',
+        'retry_attempt': 'Повторная попытка {attempt}/{max}...',
+        'waiting_before_retry': 'Ожидание {seconds} секунд перед повторной попыткой...',
+        'timeout_error_retry': 'Таймаут (попытка {attempt}/{max}), повторяем...',
+        'request_error_retry': 'Ошибка запроса (попытка {attempt}/{max}), повторяем...',
+        'api_error_retry': 'Ошибка API (попытка {attempt}/{max}): {error}, повторяем...',
+        'unknown_error_retry': 'Неизвестная ошибка (попытка {attempt}/{max}), повторяем...',
+        'all_attempts_failed': 'Все попытки исчерпаны',
         
         # Выбор изображения
         'image_selection_title': 'Выбор изображения из Sample Dataset',
@@ -210,6 +225,13 @@ TRANSLATIONS = {
         'openai_description_5': 'Использует GPT-5 mini (быстрая и недорогая)',
         'openai_description_6': 'Платный (Input: $0.250, Output: $2.000 за 1M токенов)',
         'openai_description_7': 'Рекомендуется для: профессиональных проектов, баланс цена/качество',
+        'grok_description_1': 'Модель от xAI (Elon Musk)',
+        'grok_description_2': 'Поддержка анализа изображений (vision)',
+        'grok_description_3': 'Хорошее понимание контекста',
+        'grok_description_4': 'Использует OpenAI-совместимый API',
+        'grok_description_5': 'Платный (зависит от тарифа xAI)',
+        'grok_description_6': 'Рекомендуется для: альтернатива OpenAI, лучшая производительность',
+        'grok_description_7': 'Поддерживает NSFW контент - может генерировать промпты и captions для любых изображений',
         
         # Описания режимов обработки
         'prompt_same_note': 'ВАЖНО: Промпт одинаковый для обоих режимов!',
@@ -273,14 +295,14 @@ TRANSLATIONS = {
         'kling_v25_4': 'Идеально для: быстрой генерации видео',
         
         # Описания разрешений
-        'resolution_1k_1': 'Быстрая генерация',
+        'resolution_1k_1': 'Быстрая генерация (1920×1920 для Seedream)',
         'resolution_1k_2': 'Достаточно для большинства задач',
         'resolution_1k_3': 'Меньше деталей чем в 4K',
         'resolution_1k_4': 'Рекомендуется для: тестирования, быстрой обработки',
-        'resolution_2k_1': 'Баланс между качеством и скоростью',
+        'resolution_2k_1': 'Баланс между качеством и скоростью (2048×2048)',
         'resolution_2k_2': 'Хорошая детализация',
         'resolution_2k_3': 'Рекомендуется для: большинства проектов',
-        'resolution_4k_1': 'Максимальное качество и детализация',
+        'resolution_4k_1': 'Максимальное качество и детализация (4096×4096)',
         'resolution_4k_2': 'Идеально для печати и профессионального использования',
         'resolution_4k_3': 'Дольше генерация',
         'resolution_4k_4': 'Рекомендуется для: финальных результатов, печати',
@@ -321,11 +343,37 @@ TRANSLATIONS = {
         'gpt4o_caption_4': 'Хорошее качество captions',
         'gpt4o_caption_5': 'Идеально для: совместимости и надежности',
         'caption_models_note': 'Примечание: GPT-5 Nano и GPT-5 Mini не поддерживают анализ изображений и не могут использоваться для генерации captions.',
+        'grok41_caption_1': 'Быстрая модель с большим контекстом (2M токенов)',
+        'grok41_caption_2': 'Поддержка NSFW контента',
+        'grok41_caption_3': 'Идеально для: любых изображений, включая чувствительные',
+        'grok2v_caption_1': 'Специализированная модель для анализа изображений',
+        'grok2v_caption_2': 'Поддержка NSFW контента',
         
         # Общие сообщения
         'please_select_1_or_2': 'Пожалуйста, выберите 1 или 2',
+        'please_select_1_2_or_3': 'Пожалуйста, выберите 1, 2 или 3',
         'please_select_1': 'Пожалуйста, выберите 1',
         'must_select': 'обязательно',
+        
+        # Настройки контента
+        'normal_content_settings': 'Настройки для обычного контента',
+        'main_settings': 'Основные настройки',
+        'nsfw_normal_content_settings': 'Настройки для NSFW и обычного контента',
+        'nsfw_content': 'NSFW контент',
+        'normal_content': 'Обычный контент',
+        'ai_provider_prompts': 'AI провайдер (промпты)',
+        'wavespeed_model_label': 'Wavespeed модель',
+        'provider_captions': 'Провайдер (captions)',
+        'resolution_label': 'Разрешение',
+        'using_nsfw_settings': 'Используются настройки для NSFW контента',
+        'using_normal_settings': 'Используются настройки для обычного контента',
+        'using_main_settings': 'Используются основные настройки',
+        'using_main_settings_nsfw_not_set': 'Используются основные настройки (NSFW настройки не заданы)',
+        'using_main_settings_normal_not_set': 'Используются основные настройки (настройки для обычного контента не заданы)',
+        'skipped_nsfw_disabled': 'Пропущено (NSFW контент отключен)',
+        'folder_normal_empty': "Папка 'normal' существует, но пуста",
+        'folder_nsfw_empty': "Папка 'nsfw' существует, но пуста",
+        'main_value': 'Основной ({value})',
     },
     'en': {
         # General
@@ -390,7 +438,14 @@ TRANSLATIONS = {
         'resolution': 'Resolution for Wavespeed',
         'caption_generation': 'Caption generation for LoRA training',
         'trigger_name_prompt': 'Character name (trigger name) for LoRA',
+        'caption_provider': 'Provider for caption generation',
+        'caption_provider_desc': 'Select provider for generating image captions',
         'openai_caption_model': 'OpenAI model for caption generation',
+        'grok_caption_model': 'Grok model for caption generation',
+        'openai_caption_desc': 'Proven model with vision support',
+        'grok_caption_desc': 'NSFW content support, best for sensitive images',
+        'openai_nsfw_warning': 'Does not support NSFW content - may refuse to generate for sensitive images',
+        'grok_nsfw_support': 'Supports NSFW content - can generate captions for any images',
         
         # Settings
         'ai_provider': 'AI provider for prompt generation',
@@ -405,6 +460,7 @@ TRANSLATIONS = {
         # Providers
         'gemini': 'Gemini',
         'openai': 'OpenAI',
+        'grok': 'Grok',
         'wavespeed': 'Wavespeed',
         
         # Templates
@@ -486,6 +542,13 @@ TRANSLATIONS = {
         'wavespeed_api_error': 'Wavespeed API returned error: {error}',
         'server_response': 'Server response',
         'unknown_error': 'Unknown error',
+        'retry_attempt': 'Retry attempt {attempt}/{max}...',
+        'waiting_before_retry': 'Waiting {seconds} seconds before retry...',
+        'timeout_error_retry': 'Timeout (attempt {attempt}/{max}), retrying...',
+        'request_error_retry': 'Request error (attempt {attempt}/{max}), retrying...',
+        'api_error_retry': 'API error (attempt {attempt}/{max}): {error}, retrying...',
+        'unknown_error_retry': 'Unknown error (attempt {attempt}/{max}), retrying...',
+        'all_attempts_failed': 'All attempts exhausted',
         
         # Image selection
         'image_selection_title': 'Select image from Sample Dataset',
@@ -523,6 +586,13 @@ TRANSLATIONS = {
         'openai_description_5': 'Uses GPT-5 mini (fast and affordable)',
         'openai_description_6': 'Paid (Input: $0.250, Output: $2.000 per 1M tokens)',
         'openai_description_7': 'Recommended for: professional projects, price/quality balance',
+        'grok_description_1': 'Model from xAI (Elon Musk)',
+        'grok_description_2': 'Image analysis support (vision)',
+        'grok_description_3': 'Good context understanding',
+        'grok_description_4': 'Uses OpenAI-compatible API',
+        'grok_description_5': 'Paid (depends on xAI plan)',
+        'grok_description_6': 'Recommended for: OpenAI alternative, better performance',
+        'grok_description_7': 'Supports NSFW content - can generate prompts and captions for any images',
         
         # Описания режимов обработки
         'prompt_same_note': 'IMPORTANT: Prompt is the same for both modes!',
@@ -586,14 +656,14 @@ TRANSLATIONS = {
         'kling_v25_4': 'Ideal for: fast video generation',
         
         # Описания разрешений
-        'resolution_1k_1': 'Fast generation',
+        'resolution_1k_1': 'Fast generation (1920×1920 for Seedream)',
         'resolution_1k_2': 'Sufficient for most tasks',
         'resolution_1k_3': 'Less detail than 4K',
         'resolution_1k_4': 'Recommended for: testing, fast processing',
-        'resolution_2k_1': 'Balance between quality and speed',
+        'resolution_2k_1': 'Balance between quality and speed (2048×2048)',
         'resolution_2k_2': 'Good detail',
         'resolution_2k_3': 'Recommended for: most projects',
-        'resolution_4k_1': 'Maximum quality and detail',
+        'resolution_4k_1': 'Maximum quality and detail (4096×4096)',
         'resolution_4k_2': 'Ideal for printing and professional use',
         'resolution_4k_3': 'Longer generation time',
         'resolution_4k_4': 'Recommended for: final results, printing',
@@ -634,11 +704,37 @@ TRANSLATIONS = {
         'gpt4o_caption_4': 'Good caption quality',
         'gpt4o_caption_5': 'Ideal for: compatibility and reliability',
         'caption_models_note': 'Note: GPT-5 Nano and GPT-5 Mini do not support image analysis and cannot be used for caption generation.',
+        'grok41_caption_1': 'Fast model with large context (2M tokens)',
+        'grok41_caption_2': 'NSFW content support',
+        'grok41_caption_3': 'Ideal for: any images, including sensitive content',
+        'grok2v_caption_1': 'Specialized model for image analysis',
+        'grok2v_caption_2': 'NSFW content support',
         
         # Общие сообщения
         'please_select_1_or_2': 'Please select 1 or 2',
+        'please_select_1_2_or_3': 'Please select 1, 2, or 3',
         'please_select_1': 'Please select 1',
         'must_select': 'required',
+        
+        # Content settings
+        'normal_content_settings': 'Settings for normal content',
+        'main_settings': 'Main settings',
+        'nsfw_normal_content_settings': 'Settings for NSFW and normal content',
+        'nsfw_content': 'NSFW content',
+        'normal_content': 'Normal content',
+        'ai_provider_prompts': 'AI provider (prompts)',
+        'wavespeed_model_label': 'Wavespeed model',
+        'provider_captions': 'Provider (captions)',
+        'resolution_label': 'Resolution',
+        'using_nsfw_settings': 'Using settings for NSFW content',
+        'using_normal_settings': 'Using settings for normal content',
+        'using_main_settings': 'Using main settings',
+        'using_main_settings_nsfw_not_set': 'Using main settings (NSFW settings not set)',
+        'using_main_settings_normal_not_set': 'Using main settings (normal content settings not set)',
+        'skipped_nsfw_disabled': 'Skipped (NSFW content disabled)',
+        'folder_normal_empty': "Folder 'normal' exists but is empty",
+        'folder_nsfw_empty': "Folder 'nsfw' exists but is empty",
+        'main_value': 'Main ({value})',
     }
 }
 

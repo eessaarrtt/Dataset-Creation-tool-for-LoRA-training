@@ -6,3 +6,7 @@ urllib3>=2.0.0
 google-generativeai>=0.3.0  # Для Gemini
 openai>=1.0.0  # Для OpenAI
 
+# Интерактивное меню
+rich>=13.0.0  # Для красивого вывода
+inquirer>=3.1.0  # Для выбора стрелками
+
