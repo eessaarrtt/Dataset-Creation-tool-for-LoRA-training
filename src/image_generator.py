@@ -170,7 +170,32 @@ class ImageGenerator:
                 
                 # Используем большой таймаут для совместимости
                 response = session.post(url, json=payload, headers=headers, timeout=3600)
-                response.raise_for_status()
+                
+                # Проверяем HTTP статус код перед парсингом JSON
+                if response.status_code >= 500:
+                    # Ошибка сервера (5xx) - повторяем попытку
+                    i18n = get_i18n()
+                    error_msg = f"HTTP {response.status_code} Server Error"
+                    if hasattr(response, 'text') and response.text:
+                        error_msg += f": {response.text[:200]}"
+                    
+                    if attempt < max_error_attempts:
+                        print(f"   ⚠️  {i18n.t('wavespeed_request_error', error=error_msg)}")
+                        print(f"   ⚠️  {i18n.t('api_error_retry', attempt=attempt, max=max_error_attempts, error=error_msg[:100])}")
+                        last_error = error_msg
+                        continue
+                    else:
+                        # Исчерпаны все попытки
+                        raise RuntimeError(i18n.t('wavespeed_request_error', error=error_msg))
+                elif response.status_code >= 400:
+                    # Ошибка клиента (4xx) - не повторяем
+                    i18n = get_i18n()
+                    error_msg = f"HTTP {response.status_code} Client Error"
+                    if hasattr(response, 'text') and response.text:
+                        error_msg += f": {response.text[:200]}"
+                    raise RuntimeError(i18n.t('wavespeed_request_error', error=error_msg))
+                
+                # Если статус код успешный (2xx), парсим JSON
                 result = response.json()
                 
                 # Обработка формата ответа Wavespeed с оберткой {code, message, data}
@@ -274,7 +299,43 @@ class ImageGenerator:
                 # Таймаут - не повторяем, выбрасываем ошибку
                 raise RuntimeError(error_msg)
                 
+            except requests.exceptions.HTTPError as e:
+                # HTTP ошибки (4xx, 5xx)
+                i18n = get_i18n()
+                last_error = e
+                status_code = e.response.status_code if hasattr(e, 'response') and e.response else None
+                
+                if status_code and 500 <= status_code < 600:
+                    # Ошибка сервера (5xx) - повторяем попытку
+                    error_msg = i18n.t('wavespeed_request_error', error=str(e))
+                    if hasattr(e, 'response') and e.response is not None:
+                        if hasattr(e.response, 'status_code'):
+                            error_msg += f" (HTTP {e.response.status_code})"
+                        if hasattr(e.response, 'text'):
+                            server_response = e.response.text[:500]
+                            error_msg += f"\n{i18n.t('server_response')}: {server_response}"
+                    
+                    if attempt < max_error_attempts:
+                        print(f"   ⚠️  {error_msg}")
+                        print(f"   ⚠️  {i18n.t('api_error_retry', attempt=attempt, max=max_error_attempts, error=error_msg[:100])}")
+                        last_error = error_msg
+                        continue
+                    else:
+                        # Исчерпаны все попытки
+                        raise RuntimeError(error_msg)
+                else:
+                    # Ошибка клиента (4xx) - не повторяем
+                    error_msg = i18n.t('wavespeed_request_error', error=str(e))
+                    if hasattr(e, 'response') and e.response is not None:
+                        if hasattr(e.response, 'status_code'):
+                            error_msg += f" (HTTP {e.response.status_code})"
+                        if hasattr(e.response, 'text'):
+                            server_response = e.response.text[:500]
+                            error_msg += f"\n{i18n.t('server_response')}: {server_response}"
+                    raise RuntimeError(error_msg)
+                
             except requests.exceptions.RequestException as e:
+                # Другие ошибки запроса (сеть, соединение и т.д.)
                 i18n = get_i18n()
                 last_error = e
                 error_msg = i18n.t('wavespeed_request_error', error=str(e))
@@ -282,11 +343,10 @@ class ImageGenerator:
                     if hasattr(e.response, 'status_code'):
                         error_msg += f" (HTTP {e.response.status_code})"
                     if hasattr(e.response, 'text'):
-                        # Ограничиваем длину ответа сервера
                         server_response = e.response.text[:500]
                         error_msg += f"\n{i18n.t('server_response')}: {server_response}"
                 
-                # HTTP ошибки - не повторяем, выбрасываем ошибку
+                # Сетевые ошибки - не повторяем, выбрасываем ошибку
                 raise RuntimeError(error_msg)
                 
             except (RuntimeError, ValueError) as e:
