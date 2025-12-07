@@ -12,7 +12,8 @@ from src import (
     interactive_menu,
     select_or_create_profile,
     save_profile_menu,
-    select_language
+    select_language,
+    Updater
 )
 
 try:
@@ -72,8 +73,72 @@ def main():
         action='store_true',
         help='Показать список сохраненных профилей и выйти'
     )
+    parser.add_argument(
+        '--update',
+        action='store_true',
+        help='Обновить скрипт из GitHub репозитория'
+    )
+    parser.add_argument(
+        '--check-updates',
+        action='store_true',
+        help='Проверить наличие обновлений'
+    )
+    parser.add_argument(
+        '--force-update',
+        action='store_true',
+        help='Принудительное обновление (сброс локальных изменений)'
+    )
+    parser.add_argument(
+        '--auto-update-check',
+        action='store_true',
+        help='Автоматически проверять обновления при запуске'
+    )
     
     args = parser.parse_args()
+    
+    # Обработка команд обновления
+    if args.update or args.check_updates or args.force_update:
+        i18n = get_i18n()
+        updater = Updater()
+        
+        if args.check_updates:
+            # Только проверка обновлений
+            print(f"\n🔍 {i18n.t('checking_updates')}")
+            updater.show_status()
+            has_updates, message = updater.check_for_updates()
+            print(f"\n{message}\n")
+            return
+        
+        if args.update or args.force_update:
+            # Обновление
+            success, message = updater.update(force=args.force_update)
+            if success:
+                print(f"\n✅ {message}\n")
+                print(f"💡 {i18n.t('restart_required')}\n")
+            else:
+                print(f"\n❌ {message}\n")
+            return
+    
+    # Автоматическая проверка обновлений при запуске
+    if args.auto_update_check:
+        i18n = get_i18n()
+        updater = Updater()
+        if updater.is_git_repo():
+            print(f"\n🔍 {i18n.t('checking_updates')}")
+            has_updates, message = updater.check_for_updates()
+            if has_updates:
+                print(f"\n📦 {message}\n")
+                response = input(f"   {i18n.t('update_available_prompt')}").strip().lower()
+                if response == 'y':
+                    success, update_message = updater.update()
+                    if success:
+                        print(f"\n✅ {update_message}\n")
+                        print(f"💡 {i18n.t('restart_required')}\n")
+                        return
+                    else:
+                        print(f"\n❌ {update_message}\n")
+            else:
+                print(f"   ✓ {message}\n")
     
     # Показать список профилей и выйти
     if args.list_profiles:

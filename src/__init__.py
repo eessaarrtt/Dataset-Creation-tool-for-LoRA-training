@@ -11,6 +11,7 @@ from .caption_generator import CaptionGenerator
 from .dataset_creator import DatasetCreator
 from .interactive_menu import interactive_menu, select_or_create_profile, save_profile_menu
 from .utils import select_language
+from .updater import Updater
 
 __all__ = [
     'Config',
@@ -23,6 +24,7 @@ __all__ = [
     'select_or_create_profile',
     'save_profile_menu',
     'select_language',
+    'Updater',
 ]
 
 __version__ = '1.0.0'

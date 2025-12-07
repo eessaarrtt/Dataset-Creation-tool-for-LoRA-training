@@ -766,6 +766,97 @@ profiles/
 
 ---
 
+## 🔄 Updating the Script
+
+The script supports automatic updates via git. If you installed the script using `git clone`, you can receive updates "over-the-air" without re-downloading.
+
+### Checking for Updates
+
+```bash
+# Check for available updates
+python main.py --check-updates
+```
+
+This command will show:
+- Current version (commit and branch)
+- Number of available updates
+- List of recent changes
+
+### Updating the Script
+
+```bash
+# Update script to latest version
+python main.py --update
+```
+
+**What happens during update:**
+1. Script checks for uncommitted changes
+2. If changes exist, offers to save them to temporary storage (stash)
+3. Executes `git pull` to fetch updates
+4. Shows update result
+
+### Force Update
+
+If you need to force update the script (reset local changes):
+
+```bash
+# Force update (reset local changes)
+python main.py --force-update
+```
+
+⚠️ **Warning:** This command will delete all uncommitted changes!
+
+### Automatic Update Check on Startup
+
+To automatically check for updates on every startup:
+
+```bash
+# Run with automatic update check
+python main.py --auto-update-check
+```
+
+If updates are found, the script will offer to update.
+
+### Requirements for Updates
+
+- Script must be installed via `git clone` (not just downloaded as zip)
+- Git must be installed on your computer
+- Repository must be connected to remote repository (origin)
+
+### If Updates Don't Work
+
+1. **Check if it's a git repository:**
+   ```bash
+   ls -la .git  # .git folder should exist
+   ```
+
+2. **Check connection to remote repository:**
+   ```bash
+   git remote -v  # Should show origin
+   ```
+
+3. **Install git:**
+   - Windows: [git-scm.com](https://git-scm.com/download/win)
+   - macOS: `brew install git` or install Xcode Command Line Tools
+   - Linux: `sudo apt-get install git` (Ubuntu/Debian)
+
+### First Installation via Git
+
+If you haven't installed the script via git yet:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/makenanalog.git
+cd makenanalog
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+After this, you can use update commands.
+
+---
+
 ## 🔍 Troubleshooting
 
 ### Error "API key not set"

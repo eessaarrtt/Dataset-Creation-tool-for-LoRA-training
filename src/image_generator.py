@@ -144,46 +144,67 @@ class ImageGenerator:
         # Настройка retry стратегии для HTTP запросов
         session = requests.Session()
         retry_strategy = Retry(
-            total=3,
-            backoff_factor=2,  # Увеличено с 1 до 2 для более длительных задержек
+            total=1,  # Минимальные retry на уровне HTTP, основная логика в коде
+            backoff_factor=2,
             status_forcelist=[429, 500, 502, 503, 504]
         )
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
         
-        # Увеличиваем таймаут для image-to-image (может занимать больше времени)
-        timeout_seconds = 900 if is_video else 600  # 15 минут для видео, 10 минут для изображений
-        
-        # Максимальное количество попыток (1 основная + 2 дополнительные = 3 всего)
-        max_attempts = 3
+        # Максимум 3 попытки при ошибках от сервера (error в ответе)
+        max_error_attempts = 3
+        attempt = 0
         last_error = None
         
-        for attempt in range(1, max_attempts + 1):
+        while attempt < max_error_attempts:
+            attempt += 1
             try:
                 # Если это не первая попытка, выводим сообщение о повторной попытке
                 if attempt > 1:
                     i18n = get_i18n()
-                    wait_time = (attempt - 1) * 2  # Увеличиваем задержку с каждой попыткой
-                    print(f"   ⏳ {i18n.t('retry_attempt', attempt=attempt, max=max_attempts)}")
+                    wait_time = min((attempt - 1) * 3, 30)  # Задержка до 30 секунд
+                    print(f"   ⏳ {i18n.t('retry_attempt', attempt=attempt, max=max_error_attempts)}")
                     print(f"   ⏳ {i18n.t('waiting_before_retry', seconds=wait_time)}")
                     time.sleep(wait_time)
                 
-                response = session.post(url, json=payload, headers=headers, timeout=timeout_seconds)
+                # Используем большой таймаут для совместимости
+                response = session.post(url, json=payload, headers=headers, timeout=3600)
                 response.raise_for_status()
                 result = response.json()
                 
                 # Обработка формата ответа Wavespeed с оберткой {code, message, data}
                 if 'data' in result:
                     data = result['data']
-                    # Проверяем статус
+                    # Проверяем наличие error или status == 'failed'
                     if data.get('status') == 'failed' or data.get('error'):
                         i18n = get_i18n()
                         error_msg = data.get('error', i18n.t('unknown_error'))
-                        # Это ошибка в ответе API, пробуем еще раз
-                        raise RuntimeError(i18n.t('wavespeed_api_error', error=error_msg))
+                        # Это ошибка в ответе API - повторяем попытку
+                        if attempt < max_error_attempts:
+                            print(f"   ⚠️  {i18n.t('wavespeed_api_error', error=error_msg)}")
+                            print(f"   ⚠️  {i18n.t('api_error_retry', attempt=attempt, max=max_error_attempts, error=error_msg[:100])}")
+                            last_error = error_msg
+                            continue
+                        else:
+                            # Исчерпаны все попытки
+                            raise RuntimeError(i18n.t('wavespeed_api_error', error=error_msg))
                     # Извлекаем данные из data
                     result = data
+                
+                # Проверяем наличие error или status == 'failed' в основном ответе
+                if result.get('status') == 'failed' or result.get('error'):
+                    i18n = get_i18n()
+                    error_msg = result.get('error', i18n.t('unknown_error'))
+                    # Это ошибка в ответе API - повторяем попытку
+                    if attempt < max_error_attempts:
+                        print(f"   ⚠️  {i18n.t('wavespeed_api_error', error=error_msg)}")
+                        print(f"   ⚠️  {i18n.t('api_error_retry', attempt=attempt, max=max_error_attempts, error=error_msg[:100])}")
+                        last_error = error_msg
+                        continue
+                    else:
+                        # Исчерпаны все попытки
+                        raise RuntimeError(i18n.t('wavespeed_api_error', error=error_msg))
                 
                 # Сохранение результата
                 if is_video:
@@ -249,16 +270,9 @@ class ImageGenerator:
             except requests.exceptions.Timeout as e:
                 i18n = get_i18n()
                 last_error = e
-                error_msg = i18n.t('wavespeed_timeout_error', timeout=timeout_seconds)
-                if hasattr(e, 'response') and e.response is not None and hasattr(e.response, 'text'):
-                    error_msg += f"\n{i18n.t('server_response')}: {e.response.text[:200]}"
-                
-                # Если это последняя попытка, выбрасываем ошибку
-                if attempt == max_attempts:
-                    raise RuntimeError(error_msg)
-                # Иначе продолжаем цикл для следующей попытки
-                print(f"   ⚠️  {i18n.t('timeout_error_retry', attempt=attempt, max=max_attempts)}")
-                continue
+                error_msg = i18n.t('wavespeed_timeout_error', timeout=3600)
+                # Таймаут - не повторяем, выбрасываем ошибку
+                raise RuntimeError(error_msg)
                 
             except requests.exceptions.RequestException as e:
                 i18n = get_i18n()
@@ -272,40 +286,27 @@ class ImageGenerator:
                         server_response = e.response.text[:500]
                         error_msg += f"\n{i18n.t('server_response')}: {server_response}"
                 
-                # Если это последняя попытка, выбрасываем ошибку
-                if attempt == max_attempts:
-                    raise RuntimeError(error_msg)
-                # Иначе продолжаем цикл для следующей попытки
-                print(f"   ⚠️  {i18n.t('request_error_retry', attempt=attempt, max=max_attempts)}")
-                continue
+                # HTTP ошибки - не повторяем, выбрасываем ошибку
+                raise RuntimeError(error_msg)
                 
             except (RuntimeError, ValueError) as e:
-                i18n = get_i18n()
-                last_error = e
-                error_msg = str(e)
-                
-                # Если это последняя попытка, выбрасываем ошибку
-                if attempt == max_attempts:
-                    raise RuntimeError(error_msg)
-                # Иначе продолжаем цикл для следующей попытки
-                print(f"   ⚠️  {i18n.t('api_error_retry', attempt=attempt, max=max_attempts, error=error_msg[:100])}")
+                # Это уже обработанная ошибка от API (error в ответе)
+                # Если это последняя попытка, выбрасываем
+                if attempt >= max_error_attempts:
+                    raise
+                # Иначе продолжаем цикл (уже обработано выше)
                 continue
                 
             except Exception as e:
                 i18n = get_i18n()
                 last_error = e
                 error_msg = f"{i18n.t('unknown_error')}: {str(e)}"
-                
-                # Если это последняя попытка, выбрасываем ошибку
-                if attempt == max_attempts:
-                    raise RuntimeError(error_msg)
-                # Иначе продолжаем цикл для следующей попытки
-                print(f"   ⚠️  {i18n.t('unknown_error_retry', attempt=attempt, max=max_attempts)}")
-                continue
+                # Неизвестные ошибки - выбрасываем
+                raise RuntimeError(error_msg)
         
-        # Если дошли сюда (не должно произойти, но на всякий случай)
+        # Если дошли сюда, значит все попытки исчерпаны
         if last_error:
-            raise RuntimeError(f"{i18n.t('all_attempts_failed')}: {str(last_error)}")
+            raise RuntimeError(f"{i18n.t('all_attempts_failed')}: {last_error}")
         else:
             raise RuntimeError(i18n.t('all_attempts_failed'))
 

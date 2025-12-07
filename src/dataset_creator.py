@@ -337,7 +337,12 @@ class DatasetCreator:
                 
             except Exception as e:
                 i18n = get_i18n()
-                print(f"   ❌ {i18n.t('error_processing_image')}: {sample_file['name']}: {e}")
+                error_str = str(e)
+                # Проверяем, является ли это ошибкой API после всех попыток
+                if 'Wavespeed API вернул ошибку' in error_str or 'all_attempts_failed' in error_str:
+                    print(f"   ⏭️  {i18n.t('skipping_image_after_errors', name=sample_file['name'], error=error_str[:150])}")
+                else:
+                    print(f"   ❌ {i18n.t('error_processing_image')}: {sample_file['name']}: {e}")
                 continue
         
         # Генерируем captions если нужно
