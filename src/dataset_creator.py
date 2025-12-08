@@ -291,16 +291,6 @@ class DatasetCreator:
                 model_name = self.config.wavespeed_model
                 print(f"   🎨 {i18n.t('generating_image', provider=self.config.image_provider, model=model_name)}")
                 
-                # Восстанавливаем оригинальные настройки
-                self.config.ai_provider = original_ai_provider
-                self.config.gemini_model = original_gemini_model
-                self.config.openai_model = original_openai_model
-                self.config.grok_model = original_grok_model
-                self.config.wavespeed_model = original_wavespeed_model
-                self.config.caption_provider = original_caption_provider
-                self.config.openai_caption_model = original_openai_caption_model
-                self.config.grok_caption_model = original_grok_caption_model
-                
                 # Определяем путь для сохранения
                 if self.config.generate_captions and self.config.trigger_name and not is_video:
                     # Если включена генерация captions, используем формат trigger_name_0001.png
@@ -334,6 +324,16 @@ class DatasetCreator:
                         'original_name': sample_name,
                         'index': len(self.generated_images) + 1  # Индекс начинается с 1 для _0001, _0002 и т.д.
                     })
+
+                # Восстанавливаем оригинальные настройки для следующих итераций
+                self.config.ai_provider = original_ai_provider
+                self.config.gemini_model = original_gemini_model
+                self.config.openai_model = original_openai_model
+                self.config.grok_model = original_grok_model
+                self.config.wavespeed_model = original_wavespeed_model
+                self.config.caption_provider = original_caption_provider
+                self.config.openai_caption_model = original_openai_caption_model
+                self.config.grok_caption_model = original_grok_caption_model
                 
             except Exception as e:
                 i18n = get_i18n()
